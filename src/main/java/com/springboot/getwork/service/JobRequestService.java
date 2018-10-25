@@ -10,5 +10,6 @@ public interface JobRequestService {
     public List<JobRequest> getAllByCompanyId(Company company);
     public void createJobRequest(JobRequest jobRequest);
     public List<JobRequest> getJobRequestsByNumberOrStatus(String key, Integer company_id);
+    public void updateJobRequest(JobRequest newJobRequest);
 
 }

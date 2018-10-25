@@ -39,4 +39,16 @@ public class JobRequestServiceImpl implements JobRequestService {
         return jobRequestRepository.findById(jobRequest_id).get();
     }
 
+    @Override
+    public void updateJobRequest(JobRequest newJobRequest){
+        JobRequest updatedJobRequest = jobRequestRepository.findById(newJobRequest.getId()).get();
+        updatedJobRequest.setCreationDate(newJobRequest.getCreationDate());
+        updatedJobRequest.setModificationDate(newJobRequest.getModificationDate());
+        updatedJobRequest.setDescription(newJobRequest.getDescription());
+        updatedJobRequest.setStartDate(newJobRequest.getStartDate());
+        updatedJobRequest.setEndDate(newJobRequest.getEndDate());
+        updatedJobRequest.setClosedDate(newJobRequest.getClosedDate());
+        updatedJobRequest.setStatus(newJobRequest.getStatus());
+        jobRequestRepository.save(updatedJobRequest);
+    }
 }

@@ -38,6 +38,17 @@ public class JobRequestController {
         jobRequestService.createJobRequest(jobRequest);
         return "Saved job request";
     }
+
+    @PostMapping(value = "/{company_id}/update") // Map ONLY POST Requests
+    public @ResponseBody String updateJobRequest(@PathVariable("company_id") Integer company_id,@Valid @RequestBody JobRequest newJobRequest) {
+        // @ResponseBody means the returned String is the response, not a view name
+        // @RequestParam means it is a parameter from the GET or POST request
+        Company company = companyService.getCompanyInfo(company_id);
+        newJobRequest.setCompany(company);
+        jobRequestService.updateJobRequest(newJobRequest);
+        return "updated job request";
+    }
+
     //
     @GetMapping(path = "/{company_id}/getAll")
     public @ResponseBody List<JobRequest> getAllJobRequests(@PathVariable("company_id") Integer company_id) {
