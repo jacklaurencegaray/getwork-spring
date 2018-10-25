@@ -34,4 +34,24 @@ public class ContractServiceImpl implements ContractService {
     public List<Contract> getContractsByNumberOrStatus(String key, Integer jobRequest_id){
         return contractRepository.findContractsByContractNumberOrStatus(key, jobRequest_id);
     }
+
+    @Override
+    public Contract getContractInfo(Integer contract_id) {
+        return contractRepository.findById(contract_id).get();
+    }
+
+    @Override
+    public void updateContract(Contract newContract){
+        Contract updatedContract = contractRepository.findById(newContract.getId()).get();
+        updatedContract.setCreationDate(newContract.getCreationDate());
+        updatedContract.setModificationDate(newContract.getModificationDate());
+        updatedContract.setContractNumber(newContract.getContractNumber());
+        updatedContract.setType(newContract.getType());
+        updatedContract.setContractorName(newContract.getContractorName());
+        updatedContract.setStartDate(newContract.getStartDate());
+        updatedContract.setEndDate(newContract.getEndDate());
+        updatedContract.setClosedDate(newContract.getClosedDate());
+        updatedContract.setStatus(newContract.getStatus());
+        contractRepository.save(updatedContract);
+    }
 }
