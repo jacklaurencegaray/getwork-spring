@@ -15,7 +15,7 @@ import com.springboot.getwork.model.Contract;
 import com.springboot.getwork.service.CompanyServiceImpl;
 import com.springboot.getwork.service.JobRequestServiceImpl;
 import com.springboot.getwork.service.ContractServiceImpl;
-
+import com.springboot.getwork.model.Contract.ContractStatus;
 /**
  * @author Anthony
  *
@@ -65,7 +65,13 @@ public class ContractController {
     @GetMapping(path = "/{company_id}/{jobrequest_id}/search/{key}")
     public @ResponseBody List<Contract> search(@PathVariable("jobrequest_id") Integer jobRequest_id, @PathVariable("key") String key) {
         // This returns a JSON or XML with the users
-        return contractService.getContractsByNumberOrStatus(key, jobRequest_id);
+        ContractStatus statusKey = null;
+        try{
+            statusKey = ContractStatus.valueOf(key);
+        }catch(Exception e){
+
+        }
+        return contractService.getContractsByNumberOrStatus(key, statusKey, jobRequest_id);
     }
 
 }

@@ -21,11 +21,11 @@ import java.util.Date;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Contract {
 
-    enum ContractType{
+    public enum ContractType{
         BILLBOARD, COMMERCIAL, RADIOAD, POSTER
     }
 
-    enum ContractStatus{
+    public enum ContractStatus{
         NEW, INPROGRESS, CLOSED
     }
 

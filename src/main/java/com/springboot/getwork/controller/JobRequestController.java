@@ -12,6 +12,7 @@ import com.springboot.getwork.model.Company;
 import com.springboot.getwork.model.JobRequest;
 import com.springboot.getwork.service.CompanyServiceImpl;
 import com.springboot.getwork.service.JobRequestServiceImpl;
+import com.springboot.getwork.model.JobRequest.JobStatus;
 
 /**
  * @author Anthony
@@ -60,7 +61,13 @@ public class JobRequestController {
     @GetMapping(path = "/{company_id}/search/{key}")
     public @ResponseBody List<JobRequest> search(@PathVariable("company_id") Integer company_id, @PathVariable("key") String key) {
         // This returns a JSON or XML with the users
-        return jobRequestService.getJobRequestsByNumberOrStatus(key, company_id);
+        JobStatus statusKey = null;
+        try {
+            statusKey = JobStatus.valueOf(key);
+        }catch(Exception e){
+
+        }
+        return jobRequestService.getJobRequestsByNumberOrStatus(key, statusKey, company_id);
     }
 
 }

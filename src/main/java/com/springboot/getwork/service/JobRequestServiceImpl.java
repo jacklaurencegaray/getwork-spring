@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.springboot.getwork.model.Company;
 import com.springboot.getwork.model.JobRequest;
 import com.springboot.getwork.repository.JobRequestRepository;
+import com.springboot.getwork.model.JobRequest.JobStatus;
 
 @Service
 public class JobRequestServiceImpl implements JobRequestService {
@@ -30,8 +31,8 @@ public class JobRequestServiceImpl implements JobRequestService {
     }
 
     @Override
-    public List<JobRequest> getJobRequestsByNumberOrStatus(String key, Integer company_id){
-        return jobRequestRepository.findJobRequestsByJobRequestNumberOrStatus(key, company_id);
+    public List<JobRequest> getJobRequestsByNumberOrStatus(String numberKey, JobStatus statusKey, Integer company_id){
+        return jobRequestRepository.findJobRequestsByJobRequestNumberOrStatus(numberKey, statusKey, company_id);
     }
 
     @Override

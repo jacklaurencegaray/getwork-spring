@@ -12,6 +12,7 @@ import com.springboot.getwork.model.Company;
 import com.springboot.getwork.model.JobRequest;
 import com.springboot.getwork.model.Contract;
 import com.springboot.getwork.repository.ContractRepository;
+import com.springboot.getwork.model.Contract.ContractStatus;
 
 @Service
 public class ContractServiceImpl implements ContractService {
@@ -31,8 +32,8 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public List<Contract> getContractsByNumberOrStatus(String key, Integer jobRequest_id){
-        return contractRepository.findContractsByContractNumberOrStatus(key, jobRequest_id);
+    public List<Contract> getContractsByNumberOrStatus(String numberKey, ContractStatus statusKey, Integer jobRequest_id){
+        return contractRepository.findContractsByContractNumberOrStatus(numberKey, statusKey, jobRequest_id);
     }
 
     @Override
