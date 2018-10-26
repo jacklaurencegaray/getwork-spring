@@ -21,7 +21,7 @@ import com.springboot.getwork.model.Contract.ContractStatus;
  *
  */
 @RestController
-@RequestMapping("/companies/jobrequests/contracts")
+@RequestMapping("/companies/{company_id}/jobrequests/{jobrequest_id}/contracts")
 @CrossOrigin(value = "http://localhost:4200/")
 public class ContractController {
 
@@ -35,8 +35,8 @@ public class ContractController {
     @Autowired
     private ContractServiceImpl contractService;
 
-    @PostMapping(value = "/{jobrequest_id}/create") // Map ONLY POST Requests
-    public @ResponseBody String createJobRequest(@PathVariable("jobrequest_id") Integer jobRequest_id, @Valid @RequestBody Contract contract) {
+    @PostMapping(value = "/create") // Map ONLY POST Requests
+    public @ResponseBody String createContract(@PathVariable("jobrequest_id") Integer jobRequest_id, @Valid @RequestBody Contract contract) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         JobRequest jobRequest = jobRequestService.getJobRequestInfo(jobRequest_id);
@@ -45,7 +45,7 @@ public class ContractController {
         return "Saved contract";
     }
 
-    @PostMapping(value = "/{jobrequest_id}/update") // Map ONLY POST Requests
+    @PostMapping(value = "/update") // Map ONLY POST Requests
     public @ResponseBody String updateContract(@PathVariable("jobrequest_id") Integer jobrequest_id,@Valid @RequestBody Contract newContract) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
@@ -55,14 +55,14 @@ public class ContractController {
         return "updated contract";
     }
     //
-    @GetMapping(path = "/{company_id}/{jobRequest_id}/getAll")
-    public @ResponseBody List<Contract> getAllContracts(@PathVariable("jobRequest_id") Integer jobRequest_id) {
+    @GetMapping(path = "/getAll")
+    public @ResponseBody List<Contract> getAllContracts(@PathVariable("jobrequest_id") Integer jobRequest_id) {
         // This returns a JSON or XML with the user
         JobRequest jobRequest = jobRequestService.getJobRequestInfo(jobRequest_id);
         return contractService.getAllByJobRequestId(jobRequest);
     }
 
-    @GetMapping(path = "/{company_id}/{jobrequest_id}/search/{key}")
+    @GetMapping(path = "/search/{key}")
     public @ResponseBody List<Contract> search(@PathVariable("jobrequest_id") Integer jobRequest_id, @PathVariable("key") String key) {
         // This returns a JSON or XML with the users
         ContractStatus statusKey = null;
