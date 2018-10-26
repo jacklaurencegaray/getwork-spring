@@ -3,10 +3,12 @@ package com.springboot.getwork.service;
 import com.springboot.getwork.model.Company;
 import com.springboot.getwork.model.Contract;
 import com.springboot.getwork.repository.CompanyRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class AdminServiceImpl implements AdminService {
 
     private CompanyRepository companyRepository;
@@ -21,22 +23,22 @@ public class AdminServiceImpl implements AdminService {
         return companyRepository.findById(company_id).get();
     }
 
-    public Company getCompanyRequests(Integer company_id) {
-    }
-
-    public Company getRequest(Integer company_id, Integer request_id) {
-    }
-
-    public Company getRequestContracts(Integer company_id, Integer request_id) {
-    }
-
-    public Company getContract(Integer company_id, Integer request_id, Integer contract_id) {
-    }
-
-    public Company updateContract(Integer company_id, Integer request_id, Integer contract_id, Contract contract) {
-    }
-
-    public Company search(String key) {
-    }
+//    public Company getCompanyRequests(Integer company_id) {
+//    }
+//
+//    public Company getRequest(Integer company_id, Integer request_id) {
+//    }
+//
+//    public Company getRequestContracts(Integer company_id, Integer request_id) {
+//    }
+//
+//    public Company getContract(Integer company_id, Integer request_id, Integer contract_id) {
+//    }
+//
+//    public Company updateContract(Integer company_id, Integer request_id, Integer contract_id, Contract contract) {
+//    }
+//
+//    public Company search(String key) {
+//    }
 
 }
