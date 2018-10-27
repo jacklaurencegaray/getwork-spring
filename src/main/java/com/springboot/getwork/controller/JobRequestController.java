@@ -19,7 +19,7 @@ import com.springboot.getwork.model.JobRequest.JobStatus;
  *
  */
 @RestController
-@RequestMapping("/companies/{company_id}/jobrequests")
+@RequestMapping("/{company_name}/{company_id}/jobrequests")
 @CrossOrigin(value = "http://localhost:4200/")
 public class JobRequestController {
 
@@ -31,7 +31,7 @@ public class JobRequestController {
     private JobRequestServiceImpl jobRequestService;
 
     @PostMapping(value = "/create") // Map ONLY POST Requests
-    public @ResponseBody String createJobRequest(@PathVariable("company_id") Integer company_id,@Valid @RequestBody JobRequest jobRequest) {
+    public @ResponseBody String createJobRequest(@PathVariable("company_id") Integer company_id, @PathVariable("company_name") String company_name, @Valid @RequestBody JobRequest jobRequest) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         Company company = companyService.getCompanyInfo(company_id);
@@ -41,7 +41,7 @@ public class JobRequestController {
     }
 
     @PostMapping(value = "/update") // Map ONLY POST Requests
-    public @ResponseBody String updateJobRequest(@PathVariable("company_id") Integer company_id,@Valid @RequestBody JobRequest newJobRequest) {
+    public @ResponseBody String updateJobRequest(@PathVariable("company_id") Integer company_id, @PathVariable("company_name") String company_name, @Valid @RequestBody JobRequest newJobRequest) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         Company company = companyService.getCompanyInfo(company_id);
@@ -52,14 +52,14 @@ public class JobRequestController {
 
     //
     @GetMapping(path = "/getAll")
-    public @ResponseBody List<JobRequest> getAllJobRequests(@PathVariable("company_id") Integer company_id) {
+    public @ResponseBody List<JobRequest> getAllJobRequests(@PathVariable("company_id") Integer company_id, @PathVariable("company_name") String company_name) {
         // This returns a JSON or XML with the user
         Company company = companyService.getCompanyInfo(company_id);
         return jobRequestService.getAllByCompanyId(company);
     }
 
     @GetMapping(path = "/search/{key}")
-    public @ResponseBody List<JobRequest> search(@PathVariable("company_id") Integer company_id, @PathVariable("key") String key) {
+    public @ResponseBody List<JobRequest> search(@PathVariable("company_id") Integer company_id, @PathVariable("company_name") String company_name, @PathVariable("key") String key) {
         // This returns a JSON or XML with the users
         JobStatus statusKey = null;
         try {
