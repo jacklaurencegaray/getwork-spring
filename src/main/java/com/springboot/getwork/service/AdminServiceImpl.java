@@ -2,7 +2,10 @@ package com.springboot.getwork.service;
 
 import com.springboot.getwork.model.Company;
 import com.springboot.getwork.model.Contract;
+import com.springboot.getwork.model.JobRequest;
 import com.springboot.getwork.repository.CompanyRepository;
+import com.springboot.getwork.repository.ContractRepository;
+import com.springboot.getwork.repository.JobRequestRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,6 +15,8 @@ import java.util.List;
 public class AdminServiceImpl implements AdminService {
 
     private CompanyRepository companyRepository;
+    private JobRequestRepository jobRequestRepository;
+    private ContractRepository contractRepository;
 
     public List<Company> getAllCompanies() {
         List<Company> list = new ArrayList<>();
@@ -23,18 +28,22 @@ public class AdminServiceImpl implements AdminService {
         return companyRepository.findById(company_id).get();
     }
 
-//    public Company getCompanyRequests(Integer company_id) {
-//    }
-//
-//    public Company getRequest(Integer company_id, Integer request_id) {
-//    }
-//
-//    public Company getRequestContracts(Integer company_id, Integer request_id) {
-//    }
-//
-//    public Company getContract(Integer company_id, Integer request_id, Integer contract_id) {
-//    }
-//
+    public List<JobRequest> getCompanyRequests(Integer company_id) {
+        return jobRequestRepository.findAllByCompanyId(company_id);
+    }
+
+    public JobRequest getRequest(Integer company_id, Integer request_id) {
+        return jobRequestRepository.findJobRequestByCompanyIdAndId(company_id, request_id);
+    }
+
+    public List<Contract> getRequestContracts(Integer company_id, Integer request_id) {
+        return contractRepository.findAllByJobRequestId(request_id);
+    }
+
+    public Contract getContract(Integer company_id, Integer request_id, Integer contract_id) {
+        return contractRepository.findContractByJobRequestIdAndId(request_id, contract_id);
+    }
+
 //    public Company updateContract(Integer company_id, Integer request_id, Integer contract_id, Contract contract) {
 //    }
 //

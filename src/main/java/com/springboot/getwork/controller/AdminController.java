@@ -2,6 +2,7 @@ package com.springboot.getwork.controller;
 
 import com.springboot.getwork.model.Company;
 import com.springboot.getwork.model.Contract;
+import com.springboot.getwork.model.JobRequest;
 import com.springboot.getwork.service.AdminServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,30 +26,30 @@ public class AdminController {
         return adminService.getCompany(company_id);
     }
 
-//    @GetMapping("/companies/{company_id}/requests")
-//    public @ResponseBody Company getCompanyRequests(@PathVariable("company_id") Integer company_id) {
-//        return adminService.getCompanyRequests(company_id);
-//    }
-//
-//    @GetMapping("/companies/{company_id}/requests/{request_id}")
-//    public @ResponseBody Company getRequest(@PathVariable("company_id") Integer company_id,
-//                                            @PathVariable("request_id") Integer request_id) {
-//        return adminService.getRequest(company_id, request_id);
-//    }
-//
-//    @GetMapping("/companies/{company_id}/requests/{request_id}/contracts")
-//    public @ResponseBody Company getRequestContracts(@PathVariable("company_id") Integer company_id,
-//                                                     @PathVariable("request_id") Integer request_id) {
-//        return adminService.getRequestContracts(company_id, request_id);
-//    }
-//
-//    @GetMapping("/companies/{company_id}/requests/{request_id}/contracts/{contract_id}")
-//    public @ResponseBody Company getContract(@PathVariable("company_id") Integer company_id,
-//                                             @PathVariable("request_id") Integer request_id,
-//                                             @PathVariable("contract_id") Integer contract_id) {
-//        return adminService.getContract(company_id, request_id, contract_id);
-//    }
-//
+    @GetMapping("/companies/{company_id}/requests")
+    public @ResponseBody List<JobRequest> getCompanyRequests(@PathVariable("company_id") Integer company_id) {
+        return adminService.getCompanyRequests(company_id);
+    }
+
+    @GetMapping("/companies/{company_id}/requests/{request_id}")
+    public @ResponseBody JobRequest getRequest(@PathVariable("company_id") Integer company_id,
+                                               @PathVariable("request_id") Integer request_id) {
+        return adminService.getRequest(company_id, request_id);
+    }
+
+    @GetMapping("/companies/{company_id}/requests/{request_id}/contracts")
+    public @ResponseBody List<Contract> getRequestContracts(@PathVariable("company_id") Integer company_id,
+                                                            @PathVariable("request_id") Integer request_id) {
+        return adminService.getRequestContracts(company_id, request_id);
+    }
+
+    @GetMapping("/companies/{company_id}/requests/{request_id}/contracts/{contract_id}")
+    public @ResponseBody Contract getContract(@PathVariable("company_id") Integer company_id,
+                                              @PathVariable("request_id") Integer request_id,
+                                              @PathVariable("contract_id") Integer contract_id) {
+        return adminService.getContract(company_id, request_id, contract_id);
+    }
+
 //    @PostMapping("/companies/{company_id}/requests/{request_id}/contracts/{contract_id}/update")
 //    public @ResponseBody Company updateContract(@PathVariable("company_id") Integer company_id,
 //                                                @PathVariable("request_id") Integer request_id,
