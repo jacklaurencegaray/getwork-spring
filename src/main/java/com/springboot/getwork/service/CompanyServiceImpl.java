@@ -27,4 +27,9 @@ public class CompanyServiceImpl implements CompanyService {
         return list;
     }
 
+    @Override
+    public List<Company> search(String key) {
+        return companyRepository.getCompaniesByKey(key);
+    }
+
 }

@@ -41,7 +41,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     public Contract getContract(Integer company_id, Integer request_id, Integer contract_id) {
-        return contractRepository.findContractByJobRequestIdAndId(request_id, contract_id);
+//        return contractRepository.findContractByJobRequestIdAndId(request_id, contract_id);
+        return null;
     }
 
 //    public Company updateContract(Integer company_id, Integer request_id, Integer contract_id, Contract contract) {

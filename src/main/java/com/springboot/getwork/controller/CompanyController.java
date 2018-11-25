@@ -35,8 +35,7 @@ public class CompanyController {
 
     @GetMapping(path = "/jobrequests")
     public @ResponseBody List<JobRequest> getAllJobRequests(@PathVariable("company_id") Integer company_id) {
-        Company company = companyService.getCompanyInfo(company_id);
-        return jobRequestService.getAllByCompanyId(company);
+        return jobRequestService.getAllByCompanyId(company_id);
     }
 
     @PostMapping(value = "/jobrequests/create")
@@ -74,8 +73,7 @@ public class CompanyController {
 
     @GetMapping(path = "/jobrequests/{jobrequest_id}/contracts")
     public @ResponseBody List<Contract> getAllContracts(@PathVariable("jobrequest_id") Integer jobRequest_id) {
-        JobRequest jobRequest = jobRequestService.getJobRequestInfo(jobRequest_id);
-        return contractService.getAllByJobRequestId(jobRequest);
+        return contractService.getAllByJobRequestId(jobRequest_id);
     }
 
     @PostMapping(value = "/jobrequests/{jobrequest_id}/contracts/create")

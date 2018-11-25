@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.springboot.getwork.model.JobRequest;
 import com.springboot.getwork.model.Contract;
 import com.springboot.getwork.repository.ContractRepository;
 import com.springboot.getwork.model.Contract.ContractStatus;
@@ -17,8 +16,8 @@ public class ContractServiceImpl implements ContractService {
     private ContractRepository contractRepository;
 
     @Override
-    public List<Contract> getAllByJobRequestId(JobRequest jobRequest){
-        return contractRepository.findAllByJobRequestId(jobRequest.getId());
+    public List<Contract> getAllByJobRequestId(Integer jobRequest_id){
+        return contractRepository.findAllByJobRequestId(jobRequest_id);
     }
 
     @Override
@@ -34,16 +33,20 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public void updateContract(Contract newContract){
         Contract updatedContract = contractRepository.findById(newContract.getId()).get();
-        updatedContract.setCreationDate(newContract.getCreationDate());
-        updatedContract.setModificationDate(newContract.getModificationDate());
-        updatedContract.setContractNumber(newContract.getContractNumber());
-        updatedContract.setType(newContract.getType());
-        updatedContract.setContractorName(newContract.getContractorName());
-        updatedContract.setStartDate(newContract.getStartDate());
-        updatedContract.setEndDate(newContract.getEndDate());
-        updatedContract.setClosedDate(newContract.getClosedDate());
         updatedContract.setStatus(newContract.getStatus());
         contractRepository.save(updatedContract);
+    }
+
+    public boolean deleteContract(Integer contract_id) {
+        Contract contract = contractRepository.findById(contract_id).get();
+        ContractStatus status = contract.getStatus();
+
+        if (status != ContractStatus.CLOSED) {
+            contractRepository.deleteById(contract_id);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
