@@ -2,7 +2,9 @@ package com.springboot.getwork.controller;
 
 import java.util.List;
 
+import com.springboot.getwork.model.Contract;
 import com.springboot.getwork.model.JobRequest;
+import com.springboot.getwork.service.ContractServiceImpl;
 import com.springboot.getwork.service.JobRequestServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +25,10 @@ public class CompanyController {
     @Autowired
     private JobRequestServiceImpl jobRequestService;
 
-    @GetMapping(path = "/")
+    @Autowired
+    private ContractServiceImpl contractService;
+
+    @GetMapping
     public @ResponseBody Company getCompanyInfo(@PathVariable("company_id") Integer company_id) {
         return companyService.getCompanyInfo(company_id);
     }
@@ -58,13 +63,52 @@ public class CompanyController {
     }
 
     @GetMapping(path = "/jobrequests/search/{key}")
-    public @ResponseBody List<JobRequest> search(@PathVariable("company_id") Integer company_id,
-                                                 @PathVariable("key") String key) {
+    public @ResponseBody List<JobRequest> searchJobRequest(@PathVariable("company_id") Integer company_id,
+                                                           @PathVariable("key") String key) {
         JobRequest.JobStatus statusKey = null;
         try {
             statusKey = JobRequest.JobStatus.valueOf(key);
         } catch(Exception e) {}
         return jobRequestService.getJobRequestsByNumberOrStatus(key, statusKey, company_id);
+    }
+
+    @GetMapping(path = "/jobrequests/{jobrequest_id}/contracts")
+    public @ResponseBody List<Contract> getAllContracts(@PathVariable("jobrequest_id") Integer jobRequest_id) {
+        JobRequest jobRequest = jobRequestService.getJobRequestInfo(jobRequest_id);
+        return contractService.getAllByJobRequestId(jobRequest);
+    }
+
+    @PostMapping(value = "/jobrequests/{jobrequest_id}/contracts/create")
+    public @ResponseBody String createContract(@PathVariable("jobrequest_id") Integer jobRequest_id,
+                                               @Valid @RequestBody Contract contract) {
+        JobRequest jobRequest = jobRequestService.getJobRequestInfo(jobRequest_id);
+        contract.setJobRequest(jobRequest);
+        contractService.createContract(contract);
+        return "Saved contract";
+    }
+
+    @GetMapping(path = "/jobrequests/{jobrequest_id}/contracts/{contract_id}")
+    public @ResponseBody Contract getContractInfo(@PathVariable("contract_id") Integer contract_id) {
+        return contractService.getContractInfo(contract_id);
+    }
+
+    @PostMapping(value = "/jobrequests/{jobrequest_id}/contracts/{contract_id}/update")
+    public @ResponseBody String updateContract(@PathVariable("jobrequest_id") Integer jobrequest_id,
+                                               @Valid @RequestBody Contract newContract) {
+        JobRequest jobRequest = jobRequestService.getJobRequestInfo(jobrequest_id);
+        newContract.setJobRequest(jobRequest);
+        contractService.createContract(newContract);
+        return "Updated contract";
+    }
+
+    @GetMapping(path = "/jobrequests/{jobrequest_id}/contracts/search/{key}")
+    public @ResponseBody List<Contract> searchContract(@PathVariable("jobrequest_id") Integer jobRequest_id,
+                                                       @PathVariable("key") String key) {
+        Contract.ContractStatus statusKey = null;
+        try {
+            statusKey = Contract.ContractStatus.valueOf(key);
+        } catch(Exception e) {}
+        return contractService.getContractsByNumberOrStatus(key, statusKey, jobRequest_id);
     }
 
 }
