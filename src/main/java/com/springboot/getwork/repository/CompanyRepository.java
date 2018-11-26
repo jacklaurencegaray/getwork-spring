@@ -18,4 +18,6 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
     @Query("SELECT c FROM Company c WHERE c.companyName like %:key%")
     List<Company> getCompaniesByKey(@Param("key") String key);
 
+    Company findCompanyByCompanyName(String name);
+
 }

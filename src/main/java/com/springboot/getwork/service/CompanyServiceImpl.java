@@ -46,4 +46,9 @@ public class CompanyServiceImpl implements CompanyService {
         updatedCompany.setPassword(newCompany.getPassword());
         companyRepository.save(updatedCompany);
     }
+
+    public Company getCompanyByName(String name){
+        return this.companyRepository.findCompanyByCompanyName(name);
+    }
+
 }

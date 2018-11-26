@@ -71,6 +71,18 @@ public class CompanyController {
         return jobRequestService.getJobRequestsByNumberOrStatus(key, statusKey, company_id);
     }
 
+    @DeleteMapping("/jobrequests/{request_id}")
+    public @ResponseBody String deleteRequest(@PathVariable("request_id") Integer request_id) {
+        String ret;
+
+        if (jobRequestService.deleteJobRequest(request_id)) {
+            ret = "Job request deleted";
+        } else {
+            ret = "Delete was unsuccessful";
+        }
+        return ret;
+    }
+
     @GetMapping(path = "/jobrequests/{jobrequest_id}/contracts")
     public @ResponseBody List<Contract> getAllContracts(@PathVariable("jobrequest_id") Integer jobRequest_id) {
         return contractService.getAllByJobRequestId(jobRequest_id);
@@ -107,6 +119,18 @@ public class CompanyController {
             statusKey = Contract.ContractStatus.valueOf(key);
         } catch(Exception e) {}
         return contractService.getContractsByNumberOrStatus(key, statusKey, jobRequest_id);
+    }
+
+    @DeleteMapping("/jobrequests/{request_id}/contracts/{contract_id}")
+    public @ResponseBody String deleteContract(@PathVariable("contract_id") Integer contract_id) {
+        String ret;
+
+        if (contractService.deleteContract(contract_id)) {
+            ret = "Contract deleted";
+        } else {
+            ret = "Delete was unsuccessful";
+        }
+        return ret;
     }
 
 }
