@@ -100,7 +100,7 @@ public class AdminController {
                                                @Valid @RequestBody Contract newContract) {
         JobRequest jobRequest = jobRequestService.getJobRequestInfo(request_id);
         newContract.setJobRequest(jobRequest);
-        contractService.updateContract(newContract);
+        contractService.updateContract(newContract, jobRequest);
         return "Updated contract status";
     }
 
