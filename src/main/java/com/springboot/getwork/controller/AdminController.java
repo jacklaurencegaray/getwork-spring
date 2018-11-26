@@ -37,10 +37,10 @@ public class AdminController {
         return companyService.getCompanyInfo(company_id);
     }
 
-//    @GetMapping("/companies/{company_name}")
-//    public @ResponseBody Company getCompanyByName(@PathVariable("company_name") String companyName) {
-//        return companyService.getCompanyByName(companyName);
-//    }
+    @GetMapping("/companies/getByName/{company_name}")
+    public @ResponseBody Company getCompanyByName(@PathVariable("company_name") String companyName) {
+        return companyService.getCompanyByName(companyName);
+    }
 
     @PostMapping("/companies/{company_id}/update")
     public @ResponseBody String updateCompany(@PathVariable("company_id") Integer company_id,
