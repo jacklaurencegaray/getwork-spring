@@ -3,9 +3,7 @@ package com.springboot.getwork.controller;
 import com.springboot.getwork.model.Company;
 import com.springboot.getwork.model.Contract;
 import com.springboot.getwork.model.JobRequest;
-import com.springboot.getwork.service.CompanyServiceImpl;
-import com.springboot.getwork.service.ContractServiceImpl;
-import com.springboot.getwork.service.JobRequestServiceImpl;
+import com.springboot.getwork.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +14,9 @@ import java.util.List;
 @RequestMapping("getwork/admin")
 @CrossOrigin(value = "http://localhost:4200/")
 public class AdminController {
+
+    @Autowired
+    private AdminServiceImpl adminService;
 
     @Autowired
     private CompanyServiceImpl companyService;
@@ -99,8 +100,7 @@ public class AdminController {
     public @ResponseBody String updateContract(@PathVariable("request_id") Integer request_id,
                                                @Valid @RequestBody Contract newContract) {
         JobRequest jobRequest = jobRequestService.getJobRequestInfo(request_id);
-        newContract.setJobRequest(jobRequest);
-        contractService.updateContract(newContract);
+        adminService.updateContract(newContract, jobRequest);
         return "Updated contract status";
     }
 
