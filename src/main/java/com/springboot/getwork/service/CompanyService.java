@@ -9,5 +9,6 @@ public interface CompanyService {
     Company getCompanyInfo(Integer company_id);
     List<Company> getAll();
     List<Company> search(String key);
+    void updateCompany(Company company);
 
 }

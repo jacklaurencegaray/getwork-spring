@@ -36,6 +36,13 @@ public class AdminController {
         return companyService.getCompanyInfo(company_id);
     }
 
+    @PostMapping("/companies/{company_id}/update")
+    public @ResponseBody String updateCompany(@PathVariable("company_id") Integer company_id,
+                                                 @Valid @RequestBody Company newCompany) {
+        companyService.updateCompany(newCompany);
+        return "Updated company";
+    }
+
     @PostMapping("/companies/search/{key}")
     public @ResponseBody List<Company> searchCompanies(@PathVariable("key") String key) {
         return companyService.search(key);

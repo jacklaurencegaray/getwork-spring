@@ -2,6 +2,7 @@ package com.springboot.getwork.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,4 +33,17 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepository.getCompaniesByKey(key);
     }
 
+    @Override
+    public void updateCompany(Company newCompany){
+        Company updatedCompany = companyRepository.findById(newCompany.getId()).orElse(null);
+        updatedCompany.setCreationDate(newCompany.getCreationDate());
+        updatedCompany.setModificationDate(newCompany.getModificationDate());
+        updatedCompany.setCompanyName(newCompany.getCompanyName());
+        updatedCompany.setAddress(newCompany.getAddress());
+        updatedCompany.setCompanyUrl(newCompany.getCompanyUrl());
+        updatedCompany.setTelephoneNumber(newCompany.getTelephoneNumber());
+        updatedCompany.setEmail(newCompany.getEmail());
+        updatedCompany.setPassword(newCompany.getPassword());
+        companyRepository.save(updatedCompany);
+    }
 }
