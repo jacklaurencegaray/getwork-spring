@@ -43,8 +43,11 @@ public class CompanyController {
                                                  @Valid @RequestBody JobRequest jobRequest) {
         Company company = companyService.getCompanyInfo(company_id);
         jobRequest.setCompany(company);
-        jobRequestService.createJobRequest(jobRequest);
-        return "Saved job request";
+        if (jobRequestService.createJobRequest(jobRequest)) {
+            return "Saved job request";
+        } else {
+            return "Job request not saved";
+        }
     }
 
     @GetMapping(path = "/jobrequests/{jobrequest_id}")
@@ -56,9 +59,11 @@ public class CompanyController {
     public @ResponseBody String updateJobRequest(@PathVariable("company_id") Integer company_id,
                                                  @Valid @RequestBody JobRequest newJobRequest) {
         Company company = companyService.getCompanyInfo(company_id);
-        newJobRequest.setCompany(company);
-        jobRequestService.updateJobRequest(newJobRequest);
-        return "Updated job request";
+        if (jobRequestService.updateJobRequest(newJobRequest)) {
+            return "Updated job request";
+        } else {
+            return "Job request not updated";
+        }
     }
 
     @GetMapping(path = "/jobrequests/search/{key}")
@@ -92,9 +97,11 @@ public class CompanyController {
     public @ResponseBody String createContract(@PathVariable("jobrequest_id") Integer jobRequest_id,
                                                @Valid @RequestBody Contract contract) {
         JobRequest jobRequest = jobRequestService.getJobRequestInfo(jobRequest_id);
-        contract.setJobRequest(jobRequest);
-        contractService.createContract(contract);
-        return "Saved contract";
+        if (contractService.createContract(contract, jobRequest)) {
+            return "Contract saved";
+        } else {
+            return "Contract not saved";
+        }
     }
 
     @GetMapping(path = "/jobrequests/{jobrequest_id}/contracts/{contract_id}")
@@ -106,9 +113,11 @@ public class CompanyController {
     public @ResponseBody String updateContract(@PathVariable("jobrequest_id") Integer jobrequest_id,
                                                @Valid @RequestBody Contract newContract) {
         JobRequest jobRequest = jobRequestService.getJobRequestInfo(jobrequest_id);
-        newContract.setJobRequest(jobRequest);
-        contractService.createContract(newContract);
-        return "Updated contract";
+        if (contractService.updateContract(newContract, jobRequest)) {
+            return "Updated contract";
+        } else {
+            return "Contract not updated";
+        }
     }
 
     @GetMapping(path = "/jobrequests/{jobrequest_id}/contracts/search/{key}")

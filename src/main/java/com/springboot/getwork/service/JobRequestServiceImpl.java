@@ -1,5 +1,6 @@
 package com.springboot.getwork.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.springboot.getwork.model.Contract;
@@ -26,8 +27,16 @@ public class JobRequestServiceImpl implements JobRequestService {
     }
 
     @Override
-    public void createJobRequest(JobRequest jobRequest){
-        jobRequestRepository.save(jobRequest);
+    public boolean createJobRequest(JobRequest jobRequest){
+        Date startDate = jobRequest.getStartDate();
+        Date endDate = jobRequest.getEndDate();
+
+        if (!startDate.after(endDate)) {
+            jobRequestRepository.save(jobRequest);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -36,16 +45,27 @@ public class JobRequestServiceImpl implements JobRequestService {
     }
 
     @Override
-    public void updateJobRequest(JobRequest newJobRequest){
+    public boolean updateJobRequest(JobRequest newJobRequest) {
         JobRequest updatedJobRequest = jobRequestRepository.findById(newJobRequest.getId()).get();
-        updatedJobRequest.setCreationDate(newJobRequest.getCreationDate());
-        updatedJobRequest.setModificationDate(newJobRequest.getModificationDate());
-        updatedJobRequest.setDescription(newJobRequest.getDescription());
-        updatedJobRequest.setStartDate(newJobRequest.getStartDate());
-        updatedJobRequest.setEndDate(newJobRequest.getEndDate());
-        updatedJobRequest.setClosedDate(newJobRequest.getClosedDate());
-        updatedJobRequest.setStatus(newJobRequest.getStatus());
-        jobRequestRepository.save(updatedJobRequest);
+        JobStatus updatedStatus = updatedJobRequest.getStatus();
+        Date updatedStartDate = updatedJobRequest.getStartDate();
+        Date updatedEndDate = updatedJobRequest.getEndDate();
+        Date newStartDate = newJobRequest.getStartDate();
+        Date newEndDate = newJobRequest.getEndDate();
+
+        if (updatedStatus != JobStatus.CLOSED) {
+            updatedJobRequest.setCreationDate(newJobRequest.getCreationDate());
+            updatedJobRequest.setModificationDate(newJobRequest.getModificationDate());
+            updatedJobRequest.setDescription(newJobRequest.getDescription());
+            updatedJobRequest.setStartDate(newJobRequest.getStartDate());
+            updatedJobRequest.setEndDate(newJobRequest.getEndDate());
+            updatedJobRequest.setClosedDate(newJobRequest.getClosedDate());
+            updatedJobRequest.setStatus(newJobRequest.getStatus());
+            jobRequestRepository.save(updatedJobRequest);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean deleteJobRequest(Integer request_id) {
