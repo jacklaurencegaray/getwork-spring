@@ -2,15 +2,10 @@ package com.springboot.getwork.controller;
 
 import java.util.List;
 
-import com.springboot.getwork.model.Contract;
-import com.springboot.getwork.model.JobRequest;
-import com.springboot.getwork.service.ContractServiceImpl;
-import com.springboot.getwork.service.JobRequestServiceImpl;
+import com.springboot.getwork.model.*;
+import com.springboot.getwork.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import com.springboot.getwork.model.Company;
-import com.springboot.getwork.service.CompanyServiceImpl;
 
 import javax.validation.Valid;
 
